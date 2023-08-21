@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, List } from 'antd';
+import { Button, Typography } from 'antd';
 import { JOBS_LIST, MESSAGE_ASK_QUESTIONS } from '../../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import styles from './JobList.module.css';
@@ -10,31 +10,31 @@ const JobList = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const startInterview = async (position: string) => {
-        const message = await MESSAGE_ASK_QUESTIONS(position);
+        const message = MESSAGE_ASK_QUESTIONS(position);
         await dispatch(askAiQuestion(message));
     };
 
     return (
-        <List
-            itemLayout="horizontal"
-            dataSource={JOBS_LIST}
-            renderItem={(item, index) => (
-                <List.Item>
-                    <List.Item.Meta
-                        title={
-                            <Button
-                                type="primary"
-                                htmlType="button"
-                                onClick={() => startInterview(item.title)}
-                                className={styles.button}
-                            >
-                                {item.title}
-                            </Button>
-                        }
-                    />
-                </List.Item>
-            )}
-        />
+        <div className={styles.wrapper}>
+            <Typography.Title level={3} className={styles.title}>
+                Пожалуйста, выберете направление по которому вы хотели бы пройти
+                тестовое собеседование
+            </Typography.Title>
+            <div className={styles.list}>
+                {JOBS_LIST.map((item) => (
+                    <Button
+                        type="primary"
+                        htmlType="button"
+                        onClick={() => startInterview(item.title)}
+                        className={styles.button}
+                        key={item.title}
+                        size="large"
+                    >
+                        {item.title}
+                    </Button>
+                ))}
+            </div>
+        </div>
     );
 };
 

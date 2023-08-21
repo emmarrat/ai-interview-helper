@@ -1,6 +1,4 @@
 export const APP_URL = 'https://api.openai.com/v1/chat/completions';
-export const API_KEY = 'YOUR_OPENAI_API_KEY';
-
 export const JOBS_LIST = [
     {
         title: 'Frontend разработчик',
@@ -12,7 +10,7 @@ export const JOBS_LIST = [
         title: 'QA разработчик',
     },
     {
-        title: 'UX UI дезайнер',
+        title: 'UX/UI дизайнер',
     },
 ];
 
