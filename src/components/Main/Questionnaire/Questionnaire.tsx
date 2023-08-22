@@ -9,6 +9,22 @@ import { AudioOutlined, AudioMutedOutlined } from '@ant-design/icons';
 import Spinner from '../../UI/Spinner/Spinner';
 
 const { Title, Text } = Typography;
+const renderButton = (
+    onClick: () => void,
+    icon: React.ReactNode,
+    label: string
+) => (
+    <Button
+        type="primary"
+        onClick={onClick}
+        icon={icon}
+        block
+        shape="round"
+        size="large"
+    >
+        {label}
+    </Button>
+);
 
 const Questionnaire: React.FC = () => {
     const questions = useAppSelector(selectJobQuestions);
@@ -21,16 +37,24 @@ const Questionnaire: React.FC = () => {
 
     const handleNextQuestion = () => {
         if (text.trim()) {
+            let userAnswer = '';
+            if (text.startsWith('.')) {
+                userAnswer = text.slice(1);
+            } else {
+                userAnswer = text;
+            }
             const newAnswers = [...answers];
             newAnswers[currentQuestionIndex] = {
                 question: questions[currentQuestionIndex].question,
-                answer: text,
+                answer: userAnswer,
             };
             setAnswers(newAnswers);
             setCurrentQuestionIndex(currentQuestionIndex + 1);
             setShowAnswer(false);
         }
     };
+
+    console.log(answers);
 
     const startRecording = () => {
         startListening();
@@ -49,40 +73,25 @@ const Questionnaire: React.FC = () => {
                             {questions[currentQuestionIndex].question}
                         </Text>
                         <div className={styles.btnWrapper}>
-                            {isListening ? (
-                                <Button
-                                    onClick={stopListening}
-                                    type="primary"
-                                    block
-                                    shape="round"
-                                    size="large"
-                                    icon={<AudioMutedOutlined />}
-                                >
-                                    Остановить запись
-                                </Button>
-                            ) : (
-                                <Button
-                                    type="primary"
-                                    onClick={startRecording}
-                                    icon={<AudioOutlined />}
-                                    block
-                                    shape="round"
-                                    size="large"
-                                >
-                                    {showAnswer
-                                        ? 'Записать снова'
-                                        : ' Начать запись'}
-                                </Button>
-                            )}
+                            {isListening
+                                ? renderButton(
+                                      stopListening,
+                                      <AudioMutedOutlined />,
+                                      'Остановить запись'
+                                  )
+                                : renderButton(
+                                      startRecording,
+                                      <AudioOutlined />,
+                                      showAnswer
+                                          ? 'Записать снова'
+                                          : ' Начать запись'
+                                  )}
 
-                            <Button
-                                onClick={handleNextQuestion}
-                                block
-                                shape="round"
-                                size="large"
-                            >
-                                Следующий вопрос
-                            </Button>
+                            {renderButton(
+                                handleNextQuestion,
+                                null,
+                                'Следующий вопрос'
+                            )}
                         </div>
                     </>
                 ) : (

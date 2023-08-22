@@ -18,13 +18,12 @@ const useSpeechRecognition = () => {
         let lastIsFinal = false;
         recognition.onresult = (event: SpeechRecognitionEvent) => {
             let recognizedText = '';
-
             for (let i = event.resultIndex; i < event.results.length; i++) {
                 if (event.results[i].isFinal) {
-                    if (lastIsFinal) {
-                        recognizedText += '. ';
-                    }
-                    recognizedText += event.results[i][0].transcript;
+                    let recordedText =
+                        event.results[i][0].transcript[0].toUpperCase() +
+                        event.results[i][0].transcript.slice(1);
+                    recognizedText += recordedText;
                     lastIsFinal = true;
                 } else {
                     lastIsFinal = false;
