@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AiResponse } from '../../../types';
 import { APP_URL } from '../../utils/constants';
 
-export const askAiQuestion = createAsyncThunk<{ content: string }, string>(
+export const askAiQuestion = createAsyncThunk<string, string>(
     'interviews/askQuestion',
     async (content: string, thunkAPI) => {
         const requestBody = {
@@ -25,7 +25,7 @@ export const askAiQuestion = createAsyncThunk<{ content: string }, string>(
                     headers,
                 }
             );
-            return { content: data.choices[0].message.content };
+            return data.choices[0].message.content;
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 return thunkAPI.rejectWithValue(error.response?.data);

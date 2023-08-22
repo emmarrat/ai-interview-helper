@@ -5,7 +5,8 @@
     border-radius: 18px;
     padding: 40px 12px;
 }
-.wrapper, .list {
+.wrapper,
+.list {
     display: flex;
     justify-content: center;
     flex-direction: column;

@@ -15,7 +15,7 @@ export interface ChatChoice {
     index: number;
     message: {
         role: string;
-        content: string;
+        content: any;
     };
     finish_reason: string;
 }
@@ -23,7 +23,9 @@ export interface ChatChoice {
 export interface InterviewQuestions {
     id: number;
     question: string;
+    isAnswered: boolean;
 }
-export interface InterviewAnswers extends InterviewQuestions {
+export interface InterviewAnswers {
+    question: string;
     answer: string;
 }

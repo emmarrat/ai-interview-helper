@@ -2,17 +2,20 @@ import { InterviewAnswers, InterviewQuestions } from '../../../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { askAiQuestion } from './interviewsThunks';
 import { RootState } from '../../app/store';
+import extractArrayFromString from '../../utils/takeArrayFromString';
 
 interface InterviewState {
     jobPosition: string;
     questions: InterviewQuestions[];
     answers: InterviewAnswers[];
+    postLoading: boolean;
 }
 
 const initialState: InterviewState = {
     jobPosition: '',
     questions: [],
     answers: [],
+    postLoading: false,
 };
 
 export const interviewSlice = createSlice({
@@ -29,15 +32,21 @@ export const interviewSlice = createSlice({
         // },
     },
     extraReducers: (builder) => {
-        builder.addCase(askAiQuestion.pending, (state) => {});
+        builder.addCase(askAiQuestion.pending, (state) => {
+            state.postLoading = true;
+        });
         builder.addCase(
             askAiQuestion.fulfilled,
             (state, { payload: questions }) => {
-                const string = JSON.stringify(questions.content);
-                state.questions = JSON.parse(string);
+                state.questions = extractArrayFromString(
+                    questions
+                ) as InterviewQuestions[];
+                state.postLoading = false;
             }
         );
-        builder.addCase(askAiQuestion.rejected, (state) => {});
+        builder.addCase(askAiQuestion.rejected, (state) => {
+            state.postLoading = false;
+        });
     },
 });
 
@@ -49,3 +58,5 @@ export const selectJobPosition = (state: RootState) =>
 export const selectJobQuestions = (state: RootState) =>
     state.interviews.questions;
 export const selectJobAnswers = (state: RootState) => state.interviews.answers;
+export const selectAiLoading = (state: RootState) =>
+    state.interviews.postLoading;

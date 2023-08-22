@@ -15,5 +15,5 @@ export const JOBS_LIST = [
 ];
 
 export const MESSAGE_ASK_QUESTIONS = (position: string) => {
-    return `Представь что я прохожу интервью на позицию ${position}. Составь список из трех вопросов в формате массива обьекта  {id: (номер вопроса), question: (сам вопрос)}`;
+    return `Представь что я прохожу интервью на позицию ${position}. Составь список из трех вопросов в формате массива обьекта  {id: (номер вопроса), question: (сам вопрос), isAnswered: false}`;
 };
