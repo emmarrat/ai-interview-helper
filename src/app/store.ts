@@ -15,7 +15,7 @@ import { interviewsReducer } from '../dispatchers/interviews/interviewsSlice';
 const persistConfig = {
     key: 'interview: interviews',
     storage,
-    whitelist: ['jobPosition', 'questions', 'answers'],
+    whitelist: ['jobPosition', 'questions', 'review'],
 };
 
 const rootReducer = combineReducers({

@@ -29,3 +29,9 @@ export interface InterviewAnswers {
     question: string;
     answer: string;
 }
+export interface InterviewReview {
+    id: number;
+    question: string;
+    answer: string;
+    review: string;
+}

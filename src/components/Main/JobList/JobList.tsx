@@ -5,7 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import styles from './JobList.module.css';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { askAiQuestion } from '../../../dispatchers/interviews/interviewsThunks';
-import { selectAiLoading } from '../../../dispatchers/interviews/interviewsSlice';
+import {
+    selectAiLoading,
+    setJobPosition,
+} from '../../../dispatchers/interviews/interviewsSlice';
 import Spinner from '../../UI/Spinner/Spinner';
 
 const JobList = () => {
@@ -15,6 +18,7 @@ const JobList = () => {
 
     const startInterview = async (position: string) => {
         const message = MESSAGE_ASK_QUESTIONS(position);
+        await dispatch(setJobPosition(position));
         await dispatch(askAiQuestion(message))
             .unwrap()
             .then(() => {

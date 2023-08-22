@@ -9,7 +9,7 @@ function App() {
     return (
         <>
             <AppToolbar />
-            <main className="main container">
+            <main className="container">
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/interview" element={<Interview />} />

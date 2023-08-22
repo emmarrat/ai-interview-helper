@@ -1,35 +1,30 @@
-import { InterviewAnswers, InterviewQuestions } from '../../../types';
-import { createSlice } from '@reduxjs/toolkit';
-import { askAiQuestion } from './interviewsThunks';
+import { InterviewQuestions, InterviewReview } from '../../../types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { askAiQuestion, askAiForReview } from './interviewsThunks';
 import { RootState } from '../../app/store';
 import extractArrayFromString from '../../utils/takeArrayFromString';
 
 interface InterviewState {
     jobPosition: string;
     questions: InterviewQuestions[];
-    answers: InterviewAnswers[];
     postLoading: boolean;
+    review: InterviewReview[];
 }
 
 const initialState: InterviewState = {
     jobPosition: '',
     questions: [],
-    answers: [],
     postLoading: false,
+    review: [],
 };
 
 export const interviewSlice = createSlice({
     name: 'interviews',
     initialState,
     reducers: {
-        // login: (state, action: PayloadAction<string>) => {
-        //     state.user = {
-        //         name: action.payload,
-        //         currentScore: 0,
-        //         scores: [],
-        //     };
-        //     state.isGameStarted = true;
-        // },
+        setJobPosition: (state, action: PayloadAction<string>) => {
+            state.jobPosition = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(askAiQuestion.pending, (state) => {
@@ -47,16 +42,33 @@ export const interviewSlice = createSlice({
         builder.addCase(askAiQuestion.rejected, (state) => {
             state.postLoading = false;
         });
+
+        builder.addCase(askAiForReview.pending, (state) => {
+            state.postLoading = true;
+        });
+        builder.addCase(
+            askAiForReview.fulfilled,
+            (state, { payload: questions }) => {
+                state.review = extractArrayFromString(
+                    questions
+                ) as InterviewReview[];
+                state.postLoading = false;
+            }
+        );
+        builder.addCase(askAiForReview.rejected, (state) => {
+            state.postLoading = false;
+        });
     },
 });
 
 export const interviewsReducer = interviewSlice.reducer;
-export const {} = interviewSlice.actions;
+export const { setJobPosition } = interviewSlice.actions;
 
 export const selectJobPosition = (state: RootState) =>
     state.interviews.jobPosition;
 export const selectJobQuestions = (state: RootState) =>
     state.interviews.questions;
-export const selectJobAnswers = (state: RootState) => state.interviews.answers;
+export const selectInterviewReview = (state: RootState) =>
+    state.interviews.review;
 export const selectAiLoading = (state: RootState) =>
     state.interviews.postLoading;
