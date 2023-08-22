@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout, Typography } from 'antd';
 import styles from './AppToolbar.module.css';
 
 const { Header } = Layout;
@@ -8,7 +8,11 @@ const AppToolbar = () => {
     return (
         <Header className={styles.appHeader}>
             <div className={styles.logo}>
-                <h3>AI Interview Helper </h3>
+                <Typography.Link href="/">
+                    <Typography.Title level={3}>
+                        AI Interview Helper{' '}
+                    </Typography.Title>
+                </Typography.Link>
             </div>
             {/*<Menu theme="light" mode="horizontal">*/}
             {/*  <Menu.Item key="1" icon={<HomeOutlined />}>*/}

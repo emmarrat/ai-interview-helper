@@ -24,7 +24,7 @@ const JobList = () => {
 
     return (
         <>
-            <div className={styles.wrapper}>
+            <div className="borderContainer">
                 {loading ? (
                     <>
                         <div>

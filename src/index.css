@@ -7,3 +7,19 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.borderContainer {
+    width: 550px;
+    margin: 0 auto;
+    border: 1px solid rgba(5, 5, 5, 0.06);
+    border-radius: 18px;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+@media (max-width: 768px) {
+    .borderContainer {
+        width: 80%;
+    }
+}

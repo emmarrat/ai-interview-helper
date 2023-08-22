@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Main from './components/Main/Main';
 import AppToolbar from './components/UI/AppToolbar/AppToolbar';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';

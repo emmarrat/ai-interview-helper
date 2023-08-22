@@ -1,8 +1,8 @@
 import React from 'react';
-import InterviewQuestions from '../components/Main/InterviewQuestions/InterviewQuestions';
+import Questionnaire from '../components/Main/Questionnaire/Questionnaire';
 
 const Interview = () => {
-    return <InterviewQuestions />;
+    return <Questionnaire />;
 };
 
 export default Interview;
