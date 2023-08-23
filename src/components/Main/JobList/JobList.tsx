@@ -1,6 +1,10 @@
 import React from 'react';
 import { Button, Typography } from 'antd';
-import { JOBS_LIST, MESSAGE_ASK_QUESTIONS } from '../../../utils/constants';
+import {
+    APP_NAV,
+    JOBS_LIST,
+    MESSAGE_ASK_QUESTIONS,
+} from '../../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import styles from './JobList.module.css';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
@@ -22,7 +26,7 @@ const JobList = () => {
         await dispatch(askAiQuestion(message))
             .unwrap()
             .then(() => {
-                navigate('/interview');
+                navigate(APP_NAV.interview);
             });
     };
 

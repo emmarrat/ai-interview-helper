@@ -9,6 +9,12 @@ export const API_REQUEST = (content: string) => {
         },
     };
 };
+
+export const APP_NAV = {
+    home: '/',
+    interview: '/interview',
+    interviewResult: '/interview-result',
+};
 export const JOBS_LIST = [
     {
         title: 'Frontend разработчик',

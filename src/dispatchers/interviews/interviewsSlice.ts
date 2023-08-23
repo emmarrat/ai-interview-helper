@@ -25,6 +25,11 @@ export const interviewSlice = createSlice({
         setJobPosition: (state, action: PayloadAction<string>) => {
             state.jobPosition = action.payload;
         },
+        resetInterviewState: (state) => {
+            state.jobPosition = '';
+            state.questions = [];
+            state.review = [];
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(askAiQuestion.pending, (state) => {
@@ -62,7 +67,7 @@ export const interviewSlice = createSlice({
 });
 
 export const interviewsReducer = interviewSlice.reducer;
-export const { setJobPosition } = interviewSlice.actions;
+export const { setJobPosition, resetInterviewState } = interviewSlice.actions;
 
 export const selectJobPosition = (state: RootState) =>
     state.interviews.jobPosition;

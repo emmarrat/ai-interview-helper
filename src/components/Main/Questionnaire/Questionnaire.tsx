@@ -1,26 +1,20 @@
 import React, { useState } from 'react';
 import useSpeechRecognition from '../../../hooks/useSpeechRecognitionHook';
-import { useAppSelector } from '../../../app/hooks';
-import {
-    selectAiLoading,
-    selectJobQuestions,
-} from '../../../dispatchers/interviews/interviewsSlice';
-import { Button, Typography, Tooltip } from 'antd';
-import { AudioOutlined, AudioMutedOutlined } from '@ant-design/icons';
-import { InterviewAnswers } from '../../../../types';
+import { Button, Tooltip, Typography } from 'antd';
+import { AudioMutedOutlined, AudioOutlined } from '@ant-design/icons';
+import { InterviewAnswers, InterviewQuestions } from '../../../../types';
 import styles from './Questionnaire.module.css';
 import Spinner from '../../UI/Spinner/Spinner';
 
 interface Props {
     onSubmit: (interview: InterviewAnswers[]) => void;
+    questions: InterviewQuestions[];
+    loading: boolean;
 }
 
 const { Title, Text } = Typography;
 
-const Questionnaire: React.FC<Props> = ({ onSubmit }) => {
-    const questions = useAppSelector(selectJobQuestions);
-    const loading = useAppSelector(selectAiLoading);
-
+const Questionnaire: React.FC<Props> = ({ onSubmit, questions, loading }) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<InterviewAnswers[]>([]);
     const [showAnswer, setShowAnswer] = useState(false);

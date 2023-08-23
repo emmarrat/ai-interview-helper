@@ -6,23 +6,27 @@ import Home from './pages/Home';
 import Interview from './pages/Interview';
 import { useAppSelector } from './app/hooks';
 import {
+    selectInterviewReview,
     selectJobPosition,
     selectJobQuestions,
 } from './dispatchers/interviews/interviewsSlice';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import { Typography } from 'antd';
+import { APP_NAV } from './utils/constants';
+import Results from './pages/Results';
 
 function App() {
     const jobQuestions = useAppSelector(selectJobQuestions);
     const jobPosition = useAppSelector(selectJobPosition);
+    const interviewReview = useAppSelector(selectInterviewReview);
     return (
         <>
             <AppToolbar />
             <main className="container">
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path={APP_NAV.home} element={<Home />} />
                     <Route
-                        path="/interview"
+                        path={APP_NAV.interview}
                         element={
                             <ProtectedRoute
                                 isAllowed={
@@ -31,6 +35,16 @@ function App() {
                                 }
                             >
                                 <Interview />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path={APP_NAV.interviewResult}
+                        element={
+                            <ProtectedRoute
+                                isAllowed={interviewReview.length > 0}
+                            >
+                                <Results />
                             </ProtectedRoute>
                         }
                     />
