@@ -57,7 +57,7 @@ const JobList = () => {
                         variants={ANIMATION_VARIANTS}
                     >
                         <Typography.Title level={3} className={styles.title}>
-                            Пожалуйста, выберете направление по которому вы
+                            Пожалуйста, выберите направление по которому вы
                             хотели бы пройти тестовое собеседование
                         </Typography.Title>
                         <div className={styles.list}>

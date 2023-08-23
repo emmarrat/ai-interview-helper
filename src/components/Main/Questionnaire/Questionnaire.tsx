@@ -138,8 +138,8 @@ const Questionnaire: React.FC<Props> = ({ onSubmit, questions, loading }) => {
             return (
                 <>
                     <Title level={4} className={styles.title}>
-                        Искуственный интелект проверяет ваши ответы, <br /> это
-                        может занять некоторое время
+                        Искусственный интеллект проверяет ваши ответы, <br />{' '}
+                        это может занять некоторое время
                     </Title>
                     <Spinner />
                 </>
