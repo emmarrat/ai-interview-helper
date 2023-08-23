@@ -10,13 +10,12 @@ body {
 .borderContainer {
     width: 550px;
     margin: 0 auto;
-    border-radius: 18px;
+    border-radius: 20px;
     padding: 40px 20px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    -webkit-border-radius: 50px;
     background: #ffffff;
     -webkit-box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
     box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;

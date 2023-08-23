@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSpeechRecognition from '../../../hooks/useSpeechRecognitionHook';
-import { Button, Tooltip, Typography } from 'antd';
+import { Button, notification, Tooltip, Typography } from 'antd';
 import { AudioMutedOutlined, AudioOutlined } from '@ant-design/icons';
 import { InterviewAnswers, InterviewQuestions } from '../../../../types';
 import styles from './Questionnaire.module.css';
 import Spinner from '../../UI/Spinner/Spinner';
+import TextArea from 'antd/es/input/TextArea';
 
 interface Props {
     onSubmit: (interview: InterviewAnswers[]) => void;
@@ -18,8 +19,25 @@ const Questionnaire: React.FC<Props> = ({ onSubmit, questions, loading }) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<InterviewAnswers[]>([]);
     const [showAnswer, setShowAnswer] = useState(false);
-    const { text, isListening, startListening, stopListening } =
+    const [changeAnswer, setChangeAnswer] = useState(false);
+    const [api, contextHolder] = notification.useNotification();
+
+    const { text, setText, isListening, startListening, stopListening } =
         useSpeechRecognition();
+
+    console.log(answers);
+    useEffect(() => {
+        const openNotification = () => {
+            api.open({
+                message: 'Голосовое распознование может допустить ошибки',
+                description:
+                    'Вы всегда можете исправить и/или дополнить ваш ответ вручную после завершения записи',
+                duration: 10,
+                placement: 'bottomRight',
+            });
+        };
+        openNotification();
+    }, [api]);
 
     const handleNextQuestion = () => {
         if (text.trim()) {
@@ -31,6 +49,7 @@ const Questionnaire: React.FC<Props> = ({ onSubmit, questions, loading }) => {
             setAnswers(newAnswers);
             setCurrentQuestionIndex(currentQuestionIndex + 1);
             setShowAnswer(false);
+            setChangeAnswer(false);
         }
     };
 
@@ -152,16 +171,40 @@ const Questionnaire: React.FC<Props> = ({ onSubmit, questions, loading }) => {
     };
 
     const renderAnswerSection = () => {
-        if (isListening || (text.length > 0 && showAnswer)) {
+        if (isListening || showAnswer) {
             return (
                 <div className="borderContainer">
                     {isListening && <Spinner />}
-                    {text.length > 0 && showAnswer && (
+                    {showAnswer && !isListening && (
                         <>
                             <Title level={4} className={styles.title}>
                                 Ваш ответ:
                             </Title>
-                            <Text className={styles.text}>{text}</Text>
+                            <Text className={styles.text} defaultValue={text}>
+                                {text}
+                            </Text>
+
+                            {changeAnswer ? (
+                                <>
+                                    <TextArea
+                                        rows={4}
+                                        maxLength={400}
+                                        value={text}
+                                        onChange={(e) =>
+                                            setText(e.target.value)
+                                        }
+                                    />
+                                </>
+                            ) : (
+                                <Button
+                                    size="large"
+                                    className={styles.changeAnswerButton}
+                                    shape="round"
+                                    onClick={() => setChangeAnswer(true)}
+                                >
+                                    Изменить ответ
+                                </Button>
+                            )}
                         </>
                     )}
                 </div>
@@ -174,6 +217,7 @@ const Questionnaire: React.FC<Props> = ({ onSubmit, questions, loading }) => {
         <div className={styles.wrapper}>
             <div className="borderContainer">{renderQuestion()}</div>
             {renderAnswerSection()}
+            {contextHolder}
         </div>
     );
 };
