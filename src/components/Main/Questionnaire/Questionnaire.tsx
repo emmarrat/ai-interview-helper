@@ -6,6 +6,8 @@ import { InterviewAnswers, InterviewQuestions } from '../../../../types';
 import styles from './Questionnaire.module.css';
 import Spinner from '../../UI/Spinner/Spinner';
 import TextArea from 'antd/es/input/TextArea';
+import { ANIMATION_VARIANTS } from '../../../utils/constants';
+import { motion } from 'framer-motion';
 
 interface Props {
     onSubmit: (interview: InterviewAnswers[]) => void;
@@ -25,7 +27,6 @@ const Questionnaire: React.FC<Props> = ({ onSubmit, questions, loading }) => {
     const { text, setText, isListening, startListening, stopListening } =
         useSpeechRecognition();
 
-    console.log(answers);
     useEffect(() => {
         const openNotification = () => {
             api.open({
@@ -123,7 +124,9 @@ const Questionnaire: React.FC<Props> = ({ onSubmit, questions, loading }) => {
                             currentQuestionIndex + 1 === questions.length
                                 ? 'Завершить'
                                 : 'Следующий вопрос',
-                            currentQuestionIndex + 1 === questions.length
+                            isListening || !showAnswer
+                                ? ''
+                                : currentQuestionIndex + 1 === questions.length
                                 ? 'Это был последний вопрос, завершите прохождение собеседования'
                                 : 'У вас есть еще вопрос на который предстоит ответить',
                             isListening || !showAnswer
@@ -173,7 +176,12 @@ const Questionnaire: React.FC<Props> = ({ onSubmit, questions, loading }) => {
     const renderAnswerSection = () => {
         if (isListening || showAnswer) {
             return (
-                <div className="borderContainer">
+                <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={ANIMATION_VARIANTS}
+                    className="borderContainer"
+                >
                     {isListening && <Spinner />}
                     {showAnswer && !isListening && (
                         <>
@@ -185,40 +193,46 @@ const Questionnaire: React.FC<Props> = ({ onSubmit, questions, loading }) => {
                             </Text>
 
                             {changeAnswer ? (
-                                <>
-                                    <TextArea
-                                        rows={4}
-                                        maxLength={400}
-                                        value={text}
-                                        onChange={(e) =>
-                                            setText(e.target.value)
-                                        }
-                                    />
-                                </>
+                                <TextArea
+                                    rows={4}
+                                    maxLength={400}
+                                    value={text}
+                                    onChange={(e) => setText(e.target.value)}
+                                />
                             ) : (
-                                <Button
-                                    size="large"
-                                    className={styles.changeAnswerButton}
-                                    shape="round"
-                                    onClick={() => setChangeAnswer(true)}
+                                <Tooltip
+                                    title="Вы можете исправить записанный голосовой ответ вручную"
+                                    placement="bottom"
                                 >
-                                    Изменить ответ
-                                </Button>
+                                    <Button
+                                        size="large"
+                                        className={styles.changeAnswerButton}
+                                        shape="round"
+                                        onClick={() => setChangeAnswer(true)}
+                                    >
+                                        Изменить ответ
+                                    </Button>
+                                </Tooltip>
                             )}
                         </>
                     )}
-                </div>
+                </motion.div>
             );
         }
         return null;
     };
 
     return (
-        <div className={styles.wrapper}>
+        <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={ANIMATION_VARIANTS}
+            className={styles.wrapper}
+        >
             <div className="borderContainer">{renderQuestion()}</div>
             {renderAnswerSection()}
             {contextHolder}
-        </div>
+        </motion.div>
     );
 };
 

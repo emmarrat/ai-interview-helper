@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Typography } from 'antd';
 import {
+    ANIMATION_VARIANTS,
     APP_NAV,
     JOBS_LIST,
     MESSAGE_ASK_QUESTIONS,
@@ -14,13 +15,16 @@ import {
     setJobPosition,
 } from '../../../dispatchers/interviews/interviewsSlice';
 import Spinner from '../../UI/Spinner/Spinner';
+import { motion } from 'framer-motion';
 
 const JobList = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const loading = useAppSelector(selectAiLoading);
+    const [isPositionSelected, setPositionSelected] = useState(false);
 
     const startInterview = async (position: string) => {
+        setPositionSelected(true);
         const message = MESSAGE_ASK_QUESTIONS(position);
         await dispatch(setJobPosition(position));
         await dispatch(askAiQuestion(message))
@@ -33,21 +37,25 @@ const JobList = () => {
     return (
         <>
             <div className="borderContainer">
-                {loading ? (
-                    <>
-                        <div>
-                            <Typography.Title
-                                level={4}
-                                className={styles.title}
-                            >
-                                Подбираем вопросы к собеседованию <br /> под
-                                ваше направление
-                            </Typography.Title>
-                            <Spinner />
-                        </div>
-                    </>
-                ) : (
-                    <>
+                {loading && (
+                    <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        variants={ANIMATION_VARIANTS}
+                    >
+                        <Typography.Title level={4} className={styles.title}>
+                            Подбираем вопросы к собеседованию <br /> под ваше
+                            направление
+                        </Typography.Title>
+                        <Spinner />
+                    </motion.div>
+                )}
+                {!isPositionSelected && !loading && (
+                    <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        variants={ANIMATION_VARIANTS}
+                    >
                         <Typography.Title level={3} className={styles.title}>
                             Пожалуйста, выберете направление по которому вы
                             хотели бы пройти тестовое собеседование
@@ -67,7 +75,7 @@ const JobList = () => {
                                 </Button>
                             ))}
                         </div>
-                    </>
+                    </motion.div>
                 )}
             </div>
         </>
