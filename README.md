@@ -1,46 +1,36 @@
-# Getting Started with Create React App
+# AI Interview Helper 🤖💬
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+AI Interview Helper is a web application built with React and TypeScript, utilizing Redux Toolkit, Axios, and Ant Design for the user interface. This application assists users in preparing for interviews by providing interview questions based on their chosen profession. Users can then answer these questions step by step using their voice. The spoken answers are converted into text and sent to an AI for review. Users can view the AI's review of their answers, and they also have the option to edit or correct their answers using voice input by modifying the displayed text.
 
-## Available Scripts
+## Features 🌟
 
-In the project directory, you can run:
+- Choose Profession: Users can select their profession from a predefined list.
+- Interview Questions: The app generates interview questions based on the chosen profession.
+- Voice Answers: Users can provide answers to questions using their voice.
+- Voice-to-Text Conversion: Spoken answers are transformed into text format.
+- AI Review: Textual answers are sent to an AI for review and feedback.
+- Review Display: Users can view the AI's review on their answers.
+- Edit Answers: Users can edit or fix their answers by modifying the displayed text with voice and texting.
 
-### `npm start`
+## Technologies Used 🛠️
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React
+- TypeScript
+- Redux Toolkit
+- Axios
+- Ant Design
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting Started 🚀
 
-### `npm test`
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Start the development server: `npm start`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Usage 🎉
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Launch the application in your browser.
+2. Choose your profession from the provided list.
+3. Answer the interview questions step by step using your voice.
+4. Confirm and edit your answers as needed.
+5. Submit your answers for AI review.
+6. View the AI's review and feedback.
