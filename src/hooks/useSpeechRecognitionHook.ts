@@ -31,8 +31,6 @@ const useSpeechRecognition = () => {
             }
 
             setText((prevText) => prevText + recognizedText);
-            // recognition.stop();
-            // setIsListening(false);
         };
     }, []);
 
