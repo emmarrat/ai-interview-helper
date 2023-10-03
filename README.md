@@ -1,5 +1,8 @@
 # AI Interview Helper 🤖💬
 
+![ai-interview-demo](https://github.com/emmarrat/ai-interview-helper/assets/99384076/e195d090-793b-4cb1-b91f-98563de1441a)
+
+
 AI Interview Helper is a web application built with React and TypeScript, utilizing Redux Toolkit, Axios, and Ant Design for the user interface. This application assists users in preparing for interviews by providing interview questions based on their chosen profession. Users can then answer these questions step by step using their voice. The spoken answers are converted into text and sent to an AI for review. Users can view the AI's review of their answers, and they also have the option to edit or correct their answers using voice input by modifying the displayed text.
 
 ## Features 🌟
